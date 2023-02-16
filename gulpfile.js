@@ -11,6 +11,8 @@ const cleanCss = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 const uglify = require('gulp-uglify');
+const svgo = require('gulp-svgo');
+const svgSprite = require('gulp-svg-sprite');
  
 task('clean', () => {
  	return src('dist/**/*', { read: false })
@@ -48,6 +50,13 @@ task('scripts', () => {
 		.pipe(reload({stream: true}));
 });
 
+task('icons', () => {
+	return src('src/images/icons/*.svg')
+		.pipe(svgo({plugins: [{removeAttrs: {attrs: '(fill|stroke|style|width|height|data.*)'}}]}))
+		.pipe(svgSprite({mode: {symbol: {sprite: '../sprite.svg'}}}))
+		.pipe(dest('dist/images/icons'));
+});
+
 task('server', () => {
 	browserSync.init({
 		server: {
@@ -60,5 +69,6 @@ task('server', () => {
 watch('./src/styles/**/*.scss', series('styles'));
 watch('./src/*.html', series('copy:html'));
 watch('./src/scripts/**/*.js', series('scripts'));
+watch('./src/images/icons/*.svg', series('icons'));
 
-task('default', series('clean', 'copy:html', 'styles', 'scripts', 'server'));
+task('default', series('clean', 'copy:html', 'styles', 'scripts', 'icons', 'server'));
