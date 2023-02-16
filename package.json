@@ -11,9 +11,11 @@
   "devDependencies": {
     "browser-sync": "^2.27.11",
     "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-rm": "^2.0.0",
     "gulp-sass": "^5.1.0",
+    "gulp-sass-glob": "^1.1.0",
     "node-sass": "^8.0.0"
   },
   "dependencies": {
