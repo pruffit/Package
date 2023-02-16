@@ -10,8 +10,12 @@
   "license": "ISC",
   "devDependencies": {
     "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
     "gulp-rm": "^2.0.0",
     "gulp-sass": "^5.1.0",
     "node-sass": "^8.0.0"
+  },
+  "dependencies": {
+    "normalize.css": "^8.0.1"
   }
 }
