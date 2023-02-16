@@ -6,6 +6,9 @@ const browserSync = require('browser-sync').create();
 const reload = browserSync.reload;
 const sassGlob = require('gulp-sass-glob');
 const autoprafixer = require('gulp-autoprefixer');
+const gcmq = require('gulp-group-css-media-queries');
+const cleanCss = require('gulp-clean-css');
+// const sourcemaps = require('gulp-sourcemaps');
  
 task('clean', () => {
  	return src('dist/**/*', { read: false })
@@ -18,14 +21,19 @@ task('copy:html', () => {
  
 task('styles', () => {
  	return src(['node_modules/normalize.css/normalize.css', 'src/styles/main.scss'])
+		.pipe(sourcemaps.init())
    	.pipe(concat('main.scss'))
 		.pipe(sassGlob())
    	.pipe(sass().on('error', sass.logError))
-		.pipe(autoprafixer({
-			browsers: ['last 2 versions'],
-			cascade: false
-		}))
+		.pipe(autoprafixer({cascade: false}))
+		.pipe(gcmq())
+		.pipe(cleanCss())
+		// .pipe(sourcemaps.write())
    	.pipe(dest('dist'));
+});
+
+task('scripts', () => {
+
 });
 
 task('server', () => {
